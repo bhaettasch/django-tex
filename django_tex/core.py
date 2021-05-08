@@ -12,6 +12,9 @@ logger = getLogger("django_tex")
 
 
 DEFAULT_INTERPRETER = 'lualatex'
+# Allow to run tex command multiple times
+# (e.g., to allow the generation of a toc and to fix progress bars and to display correct total page counts)
+DEFAULT_RUN_COUNT = 1
 
 # Every printing command uses a different parameter to define the destination printer
 # we define them here
@@ -41,9 +44,10 @@ class TexBuildCore:
             with open(filename, 'x', encoding='utf-8') as f:
                 f.write(self.source)
             latex_interpreter = getattr(settings, 'LATEX_INTERPRETER', DEFAULT_INTERPRETER)
+            latex_run_count = getattr(settings, 'LATEX_RUN_COUNT', DEFAULT_RUN_COUNT)
             latex_interpreter_options = getattr(settings, 'LATEX_INTERPRETER_OPTIONS', '')
-            latex_command = f'cd "{tempdir}" && {latex_interpreter} -interaction=batchmode {latex_interpreter_options}'\
-                            f' {os.path.basename(filename)}'
+            latex_call = f' && {latex_interpreter} -interaction=batchmode {latex_interpreter_options} {os.path.basename(filename)}'
+            latex_command = f'cd "{tempdir}" {latex_run_count * latex_call}'
             process = run(latex_command, shell=True, stdout=PIPE, stderr=PIPE)
             try:
                 if process.returncode == 1:

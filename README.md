@@ -193,6 +193,17 @@ If `LATEX_GRAPHICSPATH` is not specified, `django-tex` takes the `BASE_DIR` inst
 
 Note: There might be a problem if the path to the graphics directory contains whitespaces. To my knowledge, `lualatex` cannot handle whitespaces in the `\graphicspath` command, but `pdflatex` can.
 
+### Running the latex compilation command multiple times
+
+Many LaTeX features (e.g., automatic TOC generation) requires the latex compilation to be executed multiple times to converge to the expected result. You can specify a default amount of runs that should be performed in the settings.
+
+Example (for two consecutive runs):
+
+```
+LATEX_RUN_COUNT = 2
+```
+
+
 ### Printing generated pdfs
 It is also possible to use the latex rendering engine directly to print the file.
 For this you might need to define a printer in the `settings.py` if you don't want to use the default printer.
