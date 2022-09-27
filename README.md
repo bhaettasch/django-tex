@@ -1,5 +1,8 @@
 # django-tex
 
+**The functionality introduced in this fork (running compilation multiple times) can be [achieved in a different way](https://github.com/weinbusch/django-tex/issues/38#issuecomment-1222402503), hence this fork is no longer needed and will be archieved.**
+
+
 django-tex is a simple Django app to render LaTeX templates and compile
 them into PDF files.
 
